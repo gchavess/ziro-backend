@@ -9,6 +9,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -23,6 +24,9 @@ public class AuthService {
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private final PasswordUtil passwordUtil;
 
+    @Value("${jwt.duracaoTokenLogin}")
+    private long duracaoTokenLogin;
+
     public AuthService(UsuarioRepository usuarioRepository, final PasswordUtil passwordUtil) {
         this.usuarioRepository = usuarioRepository;
         this.passwordUtil = passwordUtil;
@@ -30,7 +34,7 @@ public class AuthService {
 
     public String gerarToken(Usuario usuario) {
         long agora = System.currentTimeMillis();
-        long expiracao = 1000 * 60 * 60 * 2;
+        long expiracao = this.duracaoTokenLogin;
 
         return Jwts.builder()
                 .setSubject(usuario.getId().toString())
