@@ -48,7 +48,11 @@ public class UsuarioService {
                 .map(usuario -> {
                     usuario.setNome(usuarioAtualizado.getNome());
                     usuario.setEmail(usuarioAtualizado.getEmail());
-                    usuario.setSenha(usuarioAtualizado.getSenha());
+                    String novaSenha = usuarioAtualizado.getSenha();
+                    if (novaSenha != null && !novaSenha.isEmpty()) {
+                        String senhaHash = passwordUtil.hashSHA256(novaSenha);
+                        usuario.setSenha(senhaHash);
+                    }
                     return usuarioRepository.save(usuario);
                 });
     }
