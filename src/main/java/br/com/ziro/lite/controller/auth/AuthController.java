@@ -29,7 +29,11 @@ public class AuthController {
     @PostMapping("/login")
     @Operation(summary = "Autenticar usuário (login)")
     public Optional<LoginResponseDTO> login(final @Valid @RequestBody LoginDTO loginDTO) throws Exception {
-       return authService.login(loginDTO);
+    public ResponseEntity<LoginResponseDTO> login(final @Valid @RequestBody LoginDTO loginDTO) throws Exception {
+        Optional<LoginResponseDTO> response = authService.login(loginDTO);
+        return response
+                .map(dto -> ResponseEntity.ok(dto))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
     @GetMapping("/validar-token")
