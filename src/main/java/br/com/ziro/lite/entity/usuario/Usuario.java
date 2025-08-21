@@ -1,10 +1,9 @@
 package br.com.ziro.lite.entity.usuario;
 
 import jakarta.persistence.*;
+import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Date;
 
 @Entity
 @Table(name = "usuario")
@@ -12,16 +11,16 @@ import java.util.Date;
 @Setter
 public class Usuario {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String nome;
+  private String nome;
 
-    @Column(unique = true, nullable = false)
-    private String email;
+  @Column(unique = true, nullable = false)
+  private String email;
 
-    private String senha;
+  private String senha;
 
-    private Date dataCriacao;
+  private Date dataCriacao;
 }

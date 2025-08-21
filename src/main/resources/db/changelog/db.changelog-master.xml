@@ -5,4 +5,6 @@
             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
     <include file="db/changelog/0001-create-usuario.xml"/>
+    <include file="db/changelog/0002-create-contexto_conta.xml"/>
+    <include file="db/changelog/0003-create-natureza-conta.xml"/>
 </databaseChangeLog>
