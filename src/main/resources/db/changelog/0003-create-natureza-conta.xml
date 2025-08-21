@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="0003-create-natureza-conta" author="gustavo-chaves">
+        <createTable tableName="natureza_conta">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="data_criacao" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="descricao" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="observacao" type="VARCHAR(255)"/>
+
+            <column name="codigo" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="usuario_criacao_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_natureza_conta_usuario_criacao"
+                             references="usuario(id)"/>
+            </column>
+
+            <column name="contexto_conta_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_natureza_conta_contexto_conta"
+                             references="contexto_conta(id)"/>
+            </column>
+
+            <column name="natureza_conta_padrao_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

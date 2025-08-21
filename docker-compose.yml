@@ -4,7 +4,7 @@ services:
   ziro-postgres:
     image: postgres:15
     container_name: ziro-postgres
-    restart: always
+    restart: no
     environment:
       POSTGRES_USER: ziro_user
       POSTGRES_PASSWORD: ziro_pass
@@ -17,7 +17,7 @@ services:
   ziro-pgadmin:
     image: dpage/pgadmin4:8
     container_name: ziro-pgadmin
-    restart: always
+    restart: no
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@ziro.com
       PGADMIN_DEFAULT_PASSWORD: admin
@@ -29,7 +29,7 @@ services:
   ziro-java-app:
     build: .
     container_name: ziro-java-app
-    restart: always
+    restart: no
     ports:
       - "8080:8080"
       - "5005:5005"
