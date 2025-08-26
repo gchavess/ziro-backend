@@ -20,7 +20,7 @@ public class UsuarioLogado {
   public UsuarioDTO get() {
     String usuarioIdHeader = request.getHeader("XXX-USUARIO-ID");
     if (usuarioIdHeader == null) {
-      return null;
+      throw new IllegalStateException("Header XXX-USUARIO-ID não informado!");
     }
 
     UsuarioDTO usuario = new UsuarioDTO();
