@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,27 +17,32 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@Tag(name = "Autenticação", description = "Autenticação")
+@RequiredArgsConstructor
+@Tag(name = "Autenticação", description = "Operações de autenticação e validação de tokens")
 public class AuthController {
 
   private final AuthService authService;
 
-  public AuthController(AuthService authService) {
-    this.authService = authService;
-  }
-
+  @Operation(
+      summary = "Autenticar usuário (login)",
+      description =
+          "Realiza a autenticação de um usuário com base nas credenciais fornecidas. "
+              + "Se bem-sucedido, retorna um token JWT para ser usado em chamadas subsequentes.")
   @PostMapping("/login")
-  @Operation(summary = "Autenticar usuário (login)")
-  public ResponseEntity<LoginResponseDTO> login(final @Valid @RequestBody LoginDTO loginDTO)
+  public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginDTO loginDTO)
       throws Exception {
     Optional<LoginResponseDTO> response = authService.login(loginDTO);
     return response
-        .map(dto -> ResponseEntity.ok(dto))
+        .map(ResponseEntity::ok)
         .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
   }
 
+  @Operation(
+      summary = "Validar token JWT",
+      description =
+          "Valida um token JWT enviado no cabeçalho de autorização (Bearer Token). "
+              + "Se o token for válido, retorna **200 OK**, caso contrário retorna **401 Unauthorized**.")
   @GetMapping("/validar-token")
-  @Operation(summary = "Validar token JWT")
   @SecurityRequirement(name = "bearerAuth")
   public ResponseEntity<Void> validarToken(
       @Parameter(hidden = true) @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader) {

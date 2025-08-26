@@ -8,7 +8,6 @@ import br.com.ziro.lite.entity.naturezaconta.NaturezaConta;
 import br.com.ziro.lite.entity.usuario.Usuario;
 import br.com.ziro.lite.exception.contextoconta.ContextoContaNaoEncontradoException;
 import br.com.ziro.lite.exception.naturezaconta.NaturezaContaNaoEncontradoException;
-import br.com.ziro.lite.exception.usuario.UsuarioNaoEncontradoException;
 import br.com.ziro.lite.repository.contextoconta.ContextoContaRepository;
 import br.com.ziro.lite.repository.naturezaconta.NaturezaContaRepository;
 import br.com.ziro.lite.repository.usuario.UsuarioRepository;
@@ -41,7 +40,7 @@ public class NaturezaContaService {
   }
 
   public NaturezaContaDTO salvar(NaturezaContaDTO request)
-      throws UsuarioNaoEncontradoException, ContextoContaNaoEncontradoException {
+      throws ContextoContaNaoEncontradoException {
     NaturezaConta entity = new NaturezaConta();
     entity.setDescricao(request.getDescricao());
     entity.setObservacao(request.getObservacao());
