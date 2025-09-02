@@ -8,5 +8,6 @@
     <include file="db/changelog/0002-create-contexto_conta.xml"/>
     <include file="db/changelog/0003-create-natureza-conta.xml"/>
     <include file="db/changelog/0004-create-conta.xml"/>
-    
+    <include file="db/changelog/0005-create-lancamento.xml"/>
+
 </databaseChangeLog>

@@ -2,6 +2,7 @@ package br.com.ziro.lite.controller.conta;
 
 import br.com.ziro.lite.dto.conta.AssociarNaturezaContaDTO;
 import br.com.ziro.lite.dto.conta.ContaDTO;
+import br.com.ziro.lite.dto.conta.ContaOptionDTO;
 import br.com.ziro.lite.dto.conta.ContaTreeNodeDTO;
 import br.com.ziro.lite.exception.conta.ContaNaoEncontradoException;
 import br.com.ziro.lite.exception.conta.ContaPaiNaoEncontradoException;
@@ -83,5 +84,14 @@ public class ContaController {
   public List<ContaDTO> associarNatureza(@RequestBody AssociarNaturezaContaDTO request)
       throws NaturezaContaNaoEncontradoException, ContaNaoEncontradoException {
     return service.associarNatureza(request);
+  }
+
+  @Operation(
+      summary = "Lista de contas para dropdown recursivo",
+      description =
+          "Retorna todas as contas estruturadas em formato de árvore, com 'label', 'value' e 'children', prontas para consumo em componentes de seleção hierárquica (como um dropdown recursivo no frontend).")
+  @GetMapping("/dropdown")
+  public List<ContaOptionDTO> listarDropdown() {
+    return service.listarDropdown();
   }
 }
