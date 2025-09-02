@@ -2,6 +2,7 @@ package br.com.ziro.lite.service.conta;
 
 import br.com.ziro.lite.dto.conta.AssociarNaturezaContaDTO;
 import br.com.ziro.lite.dto.conta.ContaDTO;
+import br.com.ziro.lite.dto.conta.ContaOptionDTO;
 import br.com.ziro.lite.dto.conta.ContaTreeNodeDTO;
 import br.com.ziro.lite.dto.naturezaconta.NaturezaContaDTO;
 import br.com.ziro.lite.entity.conta.Conta;
@@ -33,7 +34,9 @@ public class ContaService {
   private final UsuarioLogado usuarioLogado;
 
   public List<ContaDTO> listarTodos() {
-    return repository.findAll().stream().map(ContaDTO::fromEntity).toList();
+    return repository.findAllByUsuarioCriacao(usuarioLogado.getCurrent()).stream()
+        .map(ContaDTO::fromEntity)
+        .toList();
   }
 
   public ContaDTO buscarPorId(Long id) throws ContaNaoEncontradoException {
@@ -51,7 +54,7 @@ public class ContaService {
 
     Usuario usuarioCriacao =
         usuarioRepository
-            .findById(usuarioLogado.get().getId())
+            .findById(usuarioLogado.getCurrentDTO().getId())
             .orElseThrow(UsuarioNaoEncontradoException::new);
 
     entity.setUsuarioCriacao(usuarioCriacao);
@@ -149,7 +152,7 @@ public class ContaService {
   }
 
   public List<ContaTreeNodeDTO> getTree() {
-    List<Conta> contas = repository.findAll();
+    List<Conta> contas = repository.findAllByUsuarioCriacao(usuarioLogado.getCurrent());
 
     // transforma todas as contas em TreeNodeDTO
     Map<Long, ContaTreeNodeDTO> nodeMap =
@@ -182,6 +185,38 @@ public class ContaService {
         paiNode.getChildren().add(filhoNode);
       } else {
         roots.add(nodeMap.get(conta.getId())); // sem pai → raiz
+      }
+    }
+
+    return roots;
+  }
+
+  public List<ContaOptionDTO> listarDropdown() {
+    List<Conta> contas = repository.findAllByUsuarioCriacao(usuarioLogado.getCurrent());
+
+    // Mapa de id → DTO
+    Map<Long, ContaOptionDTO> nodeMap =
+        contas.stream()
+            .collect(
+                Collectors.toMap(
+                    Conta::getId,
+                    conta ->
+                        ContaOptionDTO.builder()
+                            .label(conta.getDescricao())
+                            .value(String.valueOf(conta.getId()))
+                            .children(new ArrayList<>())
+                            .build()));
+
+    List<ContaOptionDTO> roots = new ArrayList<>();
+
+    // Conecta pais e filhos
+    for (Conta conta : contas) {
+      if (conta.getPai() != null) {
+        ContaOptionDTO paiNode = nodeMap.get(conta.getPai().getId());
+        ContaOptionDTO filhoNode = nodeMap.get(conta.getId());
+        paiNode.getChildren().add(filhoNode);
+      } else {
+        roots.add(nodeMap.get(conta.getId()));
       }
     }
 

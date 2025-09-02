@@ -29,7 +29,9 @@ public class NaturezaContaService {
   private final UsuarioLogado usuarioLogado;
 
   public List<NaturezaContaDTO> listarTodos() {
-    return repository.findAll().stream().map(NaturezaContaDTO::fromEntity).toList();
+    return repository.findAllByUsuarioCriacao(usuarioLogado.getCurrent()).stream()
+        .map(NaturezaContaDTO::fromEntity)
+        .toList();
   }
 
   public NaturezaContaDTO buscarPorId(Long id) throws NaturezaContaNaoEncontradoException {
@@ -47,7 +49,7 @@ public class NaturezaContaService {
     entity.setCodigo(request.getCodigo());
 
     final Usuario usuarioCriacao = new Usuario();
-    usuarioCriacao.setId(usuarioLogado.get().getId());
+    usuarioCriacao.setId(usuarioLogado.getCurrentDTO().getId());
 
     entity.setUsuarioCriacao(usuarioCriacao);
     entity.setContextoConta(
@@ -81,8 +83,10 @@ public class NaturezaContaService {
 
   public List<NaturezaContaAgrupadaDTO> listarAgrupadasPorContexto() {
     // Buscar todos os contextos e naturezas
-    List<ContextoConta> contextos = this.contextoRepositoru.findAll();
-    List<NaturezaConta> naturezas = this.repository.findAll();
+    List<ContextoConta> contextos =
+        this.contextoRepositoru.findAllByUsuarioCriacao(usuarioLogado.getCurrent());
+    List<NaturezaConta> naturezas =
+        this.repository.findAllByUsuarioCriacao(usuarioLogado.getCurrent());
 
     // Indexar as naturezas por contexto
     Map<Long, List<NaturezaConta>> grouped =

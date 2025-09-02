@@ -1,6 +1,7 @@
 package br.com.ziro.lite.security;
 
 import br.com.ziro.lite.dto.usuario.UsuarioDTO;
+import br.com.ziro.lite.entity.usuario.Usuario;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -17,13 +18,24 @@ public class UsuarioLogado {
     this.request = request;
   }
 
-  public UsuarioDTO get() {
+  public UsuarioDTO getCurrentDTO() {
     String usuarioIdHeader = request.getHeader("XXX-USUARIO-ID");
     if (usuarioIdHeader == null) {
       throw new IllegalStateException("Header XXX-USUARIO-ID não informado!");
     }
 
     UsuarioDTO usuario = new UsuarioDTO();
+    usuario.setId(Long.parseLong(usuarioIdHeader));
+    return usuario;
+  }
+
+  public Usuario getCurrent() {
+    String usuarioIdHeader = request.getHeader("XXX-USUARIO-ID");
+    if (usuarioIdHeader == null) {
+      throw new IllegalStateException("Header XXX-USUARIO-ID não informado!");
+    }
+
+    Usuario usuario = new Usuario();
     usuario.setId(Long.parseLong(usuarioIdHeader));
     return usuario;
   }

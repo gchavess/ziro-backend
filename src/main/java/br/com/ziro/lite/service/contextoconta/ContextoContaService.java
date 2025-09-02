@@ -32,7 +32,9 @@ public class ContextoContaService {
 
   public List<ContextoContaDTO> listarTodos() {
 
-    return repository.findAll().stream().map(ContextoContaDTO::fromEntity).toList();
+    return repository.findAllByUsuarioCriacao(usuarioLogado.getCurrent()).stream()
+        .map(ContextoContaDTO::fromEntity)
+        .toList();
   }
 
   public Optional<ContextoConta> buscarPorId(Long id) {
@@ -47,7 +49,7 @@ public class ContextoContaService {
     entity.setCodigo(request.getCodigo());
 
     final Usuario usuarioCriacao = new Usuario();
-    usuarioCriacao.setId(usuarioLogado.get().getId());
+    usuarioCriacao.setId(usuarioLogado.getCurrentDTO().getId());
 
     entity.setUsuarioCriacao(usuarioCriacao);
 
