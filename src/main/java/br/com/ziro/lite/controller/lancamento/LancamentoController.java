@@ -1,13 +1,16 @@
 package br.com.ziro.lite.controller.lancamento;
 
 import br.com.ziro.lite.dto.lancamento.LancamentoDTO;
+import br.com.ziro.lite.dto.lancamento.LancamentoGraficoDTO;
 import br.com.ziro.lite.exception.conta.ContaNaoEncontradoException;
 import br.com.ziro.lite.exception.lancamento.LancamentoNaoEncontradoException;
 import br.com.ziro.lite.service.lancamento.LancamentoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -58,5 +61,32 @@ public class LancamentoController {
   @DeleteMapping("/{id}")
   public void deletar(@PathVariable Long id) {
     service.deletar(id);
+  }
+
+  @Operation(
+      summary = "Dados para gráfico detalhado de lançamentos",
+      description =
+          "Retorna os lançamentos com descrição da conta, valor bruto e data de pagamento para visualização em gráficos.")
+  @GetMapping("/grafico/detalhado")
+  public LancamentoGraficoDTO montarGraficoLinhaDetalhadoComFiltro(
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim,
+      Long contextoId,
+      Long naturezaId) {
+    return service.montarGraficoLinhaComFiltro(dataInicio, dataFim, contextoId, naturezaId);
+  }
+
+  @Operation(
+      summary = "Dados para gráfico simplificado de lançamentos",
+      description =
+          "Retorna os lançamentos com descrição da conta, valor bruto e data de pagamento para visualização em gráficos.")
+  @GetMapping("/grafico/simplificado")
+  public LancamentoGraficoDTO montarGraficoLinhaSimplificadoComFiltro(
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim,
+      Long contextoId,
+      Long naturezaId) {
+    return service.montarGraficoLinhaSimplificadoComFiltro(
+        dataInicio, dataFim, contextoId, naturezaId);
   }
 }
