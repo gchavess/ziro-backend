@@ -3,6 +3,7 @@ package br.com.ziro.lite.service.naturezaconta;
 import br.com.ziro.lite.dto.contextoconta.ContextoContaDTO;
 import br.com.ziro.lite.dto.naturezaconta.NaturezaContaAgrupadaDTO;
 import br.com.ziro.lite.dto.naturezaconta.NaturezaContaDTO;
+import br.com.ziro.lite.dto.usuario.UsuarioDTO;
 import br.com.ziro.lite.entity.contextoconta.ContextoConta;
 import br.com.ziro.lite.entity.naturezaconta.NaturezaConta;
 import br.com.ziro.lite.entity.usuario.Usuario;
@@ -12,20 +13,23 @@ import br.com.ziro.lite.repository.contextoconta.ContextoContaRepository;
 import br.com.ziro.lite.repository.naturezaconta.NaturezaContaRepository;
 import br.com.ziro.lite.repository.usuario.UsuarioRepository;
 import br.com.ziro.lite.security.UsuarioLogado;
+import br.com.ziro.lite.util.usuariopadrao.UsuarioPadraoUtil;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class NaturezaContaService {
 
   private final NaturezaContaRepository repository;
   private final UsuarioRepository usuarioRepository;
-  private final ContextoContaRepository contextoRepositoru;
+  private final ContextoContaRepository contextoRepository;
   private final UsuarioLogado usuarioLogado;
 
   public List<NaturezaContaDTO> listarTodos() {
@@ -47,13 +51,24 @@ public class NaturezaContaService {
     entity.setDescricao(request.getDescricao());
     entity.setObservacao(request.getObservacao());
     entity.setCodigo(request.getCodigo());
+    entity.setPadrao(request.getPadrao());
 
     final Usuario usuarioCriacao = new Usuario();
-    usuarioCriacao.setId(usuarioLogado.getCurrentDTO().getId());
+
+    if (request.getUsuarioCriacao() != null && request.getUsuarioCriacao().getId() != null) {
+      usuarioCriacao.setId(request.getUsuarioCriacao().getId());
+    } else {
+      usuarioCriacao.setId(usuarioLogado.getCurrentDTO().getId());
+    }
 
     entity.setUsuarioCriacao(usuarioCriacao);
+
+    if (request.getNaturezaContaPadraoId() != null) {
+      entity.setNaturezaContaPadraoId(request.getNaturezaContaPadraoId());
+    }
+
     entity.setContextoConta(
-        contextoRepositoru
+        contextoRepository
             .findById(request.getContextoConta().getId())
             .orElseThrow(() -> new ContextoContaNaoEncontradoException()));
     entity.setDataCriacao(new Date());
@@ -70,7 +85,7 @@ public class NaturezaContaService {
     entity.setObservacao(request.getObservacao());
     entity.setCodigo(request.getCodigo());
     entity.setContextoConta(
-        contextoRepositoru
+        contextoRepository
             .findById(request.getContextoConta().getId())
             .orElseThrow(() -> new ContextoContaNaoEncontradoException()));
 
@@ -84,7 +99,7 @@ public class NaturezaContaService {
   public List<NaturezaContaAgrupadaDTO> listarAgrupadasPorContexto() {
     // Buscar todos os contextos e naturezas
     List<ContextoConta> contextos =
-        this.contextoRepositoru.findAllByUsuarioCriacao(usuarioLogado.getCurrent());
+        this.contextoRepository.findAllByUsuarioCriacao(usuarioLogado.getCurrent());
     List<NaturezaConta> naturezas =
         this.repository.findAllByUsuarioCriacao(usuarioLogado.getCurrent());
 
@@ -120,5 +135,34 @@ public class NaturezaContaService {
                   null);
             })
         .toList();
+  }
+
+  public void inicializarValoresPadroes(final Usuario usuarioCriado) throws Exception {
+    var usuarioPadrao = UsuarioPadraoUtil.get();
+
+    boolean jaExiste = repository.existsByUsuarioCriacaoAndPadrao(usuarioPadrao, false);
+    if (jaExiste) {
+      return;
+    }
+
+    List<NaturezaConta> listaPadrao =
+        repository.findAllByUsuarioCriacaoAndPadrao(usuarioPadrao, true);
+
+    for (NaturezaConta padrao : listaPadrao) {
+      NaturezaContaDTO novo = NaturezaContaDTO.inicializarValoresPadroes(padrao);
+
+      if (padrao.getContextoConta() != null) {
+        ContextoConta contextoConta =
+            this.contextoRepository
+                .findByUsuarioCriacaoAndContextoContaPadraoId(
+                    usuarioCriado, padrao.getContextoConta().getId())
+                .orElseThrow(ContextoContaNaoEncontradoException::new);
+
+        novo.setContextoConta(ContextoContaDTO.fromEntity(contextoConta));
+      }
+
+      novo.setUsuarioCriacao(UsuarioDTO.fromEntity(usuarioCriado));
+      this.salvar(novo);
+    }
   }
 }

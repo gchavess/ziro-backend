@@ -25,8 +25,12 @@ public class NaturezaConta {
 
   private String observacao;
 
+  private Long naturezaContaPadraoId;
+
   @Column(nullable = false, unique = true)
   private String codigo;
+
+  private Boolean padrao;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(
