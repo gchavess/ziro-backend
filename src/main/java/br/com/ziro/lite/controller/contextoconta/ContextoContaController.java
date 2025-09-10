@@ -42,7 +42,7 @@ public class ContextoContaController {
       summary = "Criar novo contexto de conta",
       description = "Cria um novo contexto de conta no sistema com as informações fornecidas.")
   @PostMapping
-  public ContextoContaDTO criar(@RequestBody ContextoConta contextoConta) {
+  public ContextoContaDTO criar(@RequestBody ContextoContaDTO contextoConta) {
     return service.salvar(contextoConta);
   }
 

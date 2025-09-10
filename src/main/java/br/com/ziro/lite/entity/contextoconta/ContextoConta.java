@@ -23,8 +23,12 @@ public class ContextoConta {
 
   private String observacao;
 
+  private Long contextoContaPadraoId;
+
   @Column(nullable = false)
   private String codigo;
+
+  private Boolean padrao;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(

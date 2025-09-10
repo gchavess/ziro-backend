@@ -28,6 +28,9 @@
             <column name="contexto_conta_padrao_id" type="bigint">
                 <constraints nullable="true"/>
             </column>
+            <column name="padrao" type="boolean">
+                <constraints nullable="true"/>
+            </column>
         </createTable>
 
         <addForeignKeyConstraint

@@ -38,6 +38,9 @@
             <column name="natureza_conta_padrao_id" type="BIGINT">
                 <constraints nullable="true"/>
             </column>
+            <column name="padrao" type="boolean">
+                <constraints nullable="true"/>
+            </column>
         </createTable>
     </changeSet>
 
