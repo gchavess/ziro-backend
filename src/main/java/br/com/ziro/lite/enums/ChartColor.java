@@ -2,9 +2,9 @@ package br.com.ziro.lite.enums;
 
 public enum ChartColor {
   BLUE("#3b82f6"),
-  GREEN("#10b981"),
-  ORANGE("#f59e0b"),
   RED("#ef4444"),
+  ORANGE("#f59e0b"),
+  GREEN("#10b981"),
   PURPLE("#8b5cf6"),
   PINK("#ec4899"),
   GRAY("#6b7280"),
