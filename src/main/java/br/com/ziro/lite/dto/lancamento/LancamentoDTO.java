@@ -23,6 +23,7 @@ public class LancamentoDTO {
   private Date dataPagamento;
   private BigDecimal valorBruto;
   private ContaDTO conta;
+  private String contaCodigo;
   private Long usuarioCriacaoId;
 
   public static LancamentoDTO fromEntity(Lancamento entity) {
@@ -35,6 +36,7 @@ public class LancamentoDTO {
         .dataPagamento(entity.getDataPagamento())
         .valorBruto(entity.getValorBruto())
         .conta(entity.getConta() != null ? ContaDTO.fromEntity(entity.getConta()) : null)
+        .contaCodigo(entity.getConta() != null ? entity.getConta().getCodigo() : null)
         .usuarioCriacaoId(
             entity.getUsuarioCriacao() != null ? entity.getUsuarioCriacao().getId() : null)
         .build();
