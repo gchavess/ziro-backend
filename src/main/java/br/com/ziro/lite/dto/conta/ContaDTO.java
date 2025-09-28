@@ -19,6 +19,7 @@ public class ContaDTO {
   private String codigo;
   private Long usuarioCriacaoId;
   private Long paiId;
+  private String paiCodigo;
   private NaturezaContaDTO naturezaConta;
 
   public static ContaDTO fromEntity(Conta entity) {
@@ -30,6 +31,7 @@ public class ContaDTO {
         .codigo(entity.getCodigo())
         .usuarioCriacaoId(entity.getUsuarioCriacao().getId())
         .paiId(entity.getPai() != null ? entity.getPai().getId() : null)
+        .paiCodigo(entity.getPai() != null ? entity.getPai().getCodigo() : null)
         .naturezaConta(
             entity.getNaturezaConta() != null
                 ? NaturezaContaDTO.fromEntity(entity.getNaturezaConta())
