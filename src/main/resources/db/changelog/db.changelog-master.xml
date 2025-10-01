@@ -11,7 +11,10 @@
     <include file="db/changelog/0003-create-natureza-conta.xml"/>
     <include file="db/changelog/0004-create-conta.xml"/>
     <include file="db/changelog/0005-create-lancamento.xml"/>
+
     <include file="db/changelog/insert/0001-insert-usuario.xml"/>
     <include file="db/changelog/insert/0002-insert-contexto_conta.xml"/>
     <include file="db/changelog/insert/0003-insert-natureza_conta.xml"/>
+
+    <include file="db/changelog/0006-create-analise-financeira.xml"/>
 </databaseChangeLog>

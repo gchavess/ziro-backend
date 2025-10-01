@@ -71,6 +71,15 @@ public class LancamentoService {
       entity.setConta(conta);
     }
 
+    if (request.getContaCodigo() != null) {
+      System.out.println("Entrou IF: " + request.getContaCodigo());
+
+      entity.setConta(
+          contaRepository
+              .findByUsuarioCriacaoAndCodigo(usuarioCriacao, request.getContaCodigo())
+              .orElseThrow(ContaNaoEncontradoException::new));
+    }
+
     return LancamentoDTO.fromEntity(repository.save(entity));
   }
 
