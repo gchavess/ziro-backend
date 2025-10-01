@@ -83,7 +83,7 @@ public class ContaService {
       entity.setPai(
           repository.findById(request.getPaiId()).orElseThrow(ContaPaiNaoEncontradoException::new));
     }
-    System.out.println("Ao adicionar: " + request.getPaiCodigo());
+
     if (request.getPaiCodigo() != null) {
       entity.setPai(
           repository

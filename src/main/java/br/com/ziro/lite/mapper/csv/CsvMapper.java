@@ -22,7 +22,6 @@ public class CsvMapper {
     c.setCodigo(csvLine[3]);
     c.setPaiCodigo(csvLine[7].trim().isEmpty() ? null : csvLine[7]);
 
-    System.out.println("Finalizou convert CONTA");
     return c;
   }
 
