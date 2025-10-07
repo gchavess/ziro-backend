@@ -86,7 +86,6 @@ class ContextoContaServiceTest {
     ContextoContaDTO request =
         new ContextoContaDTO(null, "Descricao", "Obs", "Codigo", usuarioDTO, null);
 
-    // lenient para não gerar UnnecessaryStubbingException
     lenient().when(usuarioLogado.getCurrentDTO()).thenReturn(usuarioDTO);
 
     ContextoConta saved = new ContextoConta();
@@ -146,7 +145,6 @@ class ContextoContaServiceTest {
       when(repository.existsByUsuarioCriacaoAndPadrao(usuario, false)).thenReturn(false);
       when(repository.findAllByUsuarioCriacaoAndPadrao(usuario, true)).thenReturn(List.of(padrao));
 
-      // lenient para salvar interno
       lenient().when(repository.save(any(ContextoConta.class))).thenAnswer(i -> i.getArgument(0));
 
       contextoContaService.inicializarValoresPadroes(usuarioNovo);

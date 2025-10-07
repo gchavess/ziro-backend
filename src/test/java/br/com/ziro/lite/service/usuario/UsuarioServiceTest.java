@@ -38,8 +38,8 @@ class UsuarioServiceTest {
   void setup() {
     usuario = new Usuario();
     usuario.setId(1L);
-    usuario.setNome("Gustavo");
-    usuario.setEmail("gustavo@email.com");
+    usuario.setNome("Teste");
+    usuario.setEmail("teste@teste.com");
     usuario.setSenha("123456");
   }
 
@@ -50,7 +50,7 @@ class UsuarioServiceTest {
     List<Usuario> resultado = usuarioService.listarTodos();
 
     assertEquals(1, resultado.size());
-    assertEquals("Gustavo", resultado.get(0).getNome());
+    assertEquals("Teste", resultado.get(0).getNome());
   }
 
   @Test
@@ -60,7 +60,7 @@ class UsuarioServiceTest {
     Optional<Usuario> resultado = usuarioService.buscarPorId(1L);
 
     assertTrue(resultado.isPresent());
-    assertEquals("Gustavo", resultado.get().getNome());
+    assertEquals("Teste", resultado.get().getNome());
   }
 
   @Test

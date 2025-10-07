@@ -34,12 +34,11 @@ class AuthServiceTest {
     usuario = new Usuario();
     usuario.setId(1L);
     usuario.setEmail("teste@teste.com");
-    usuario.setSenha("hashcorreta"); // senha já hash
+    usuario.setSenha("hashcorreta");
 
-    // Setar duracaoTokenLogin privado via Reflection
     Field duracaoField = AuthService.class.getDeclaredField("duracaoTokenLogin");
     duracaoField.setAccessible(true);
-    duracaoField.set(authService, 3600000L); // 1 hora
+    duracaoField.set(authService, 3600000L);
   }
 
   @Test
@@ -48,10 +47,8 @@ class AuthServiceTest {
     loginDTO.setEmail("teste@teste.com");
     loginDTO.setSenha("senha123");
 
-    // Mock do hash da senha
     when(passwordUtil.hashSHA256("senha123")).thenReturn("hashcorreta");
 
-    // Mock do repositório
     when(usuarioRepository.findByEmail("teste@teste.com")).thenReturn(Optional.of(usuario));
 
     Optional<LoginResponseDTO> result = authService.login(loginDTO);
@@ -95,7 +92,6 @@ class AuthServiceTest {
 
     assertNotNull(token);
 
-    // Decodificar token para checar se o subject é o id do usuário
     String subject =
         Jwts.parserBuilder()
             .setSigningKey(authService.key)

@@ -56,10 +56,8 @@ class NaturezaContaServiceTest {
     natureza.setDescricao("Natureza 1");
     natureza.setContextoConta(contexto);
 
-    // Lenient evita erros de "Unnecessary Stubbing"
     lenient().when(usuarioLogado.getCurrent()).thenReturn(usuario);
 
-    // Mock para salvar() que precisa do DTO
     UsuarioDTO usuarioDTO = new UsuarioDTO();
     usuarioDTO.setId(usuario.getId());
     lenient().when(usuarioLogado.getCurrentDTO()).thenReturn(usuarioDTO);
@@ -143,7 +141,6 @@ class NaturezaContaServiceTest {
     assertEquals("Natureza 1", resultado.get(0).getChildren().get(0).getDescricao());
   }
 
-  // Teste básico para inicializarValoresPadroes
   @Test
   void inicializarValoresPadroes_deveChamarSalvarQuandoNaoExiste() throws Exception {
     when(repository.existsByUsuarioCriacaoAndPadrao(any(), eq(false))).thenReturn(false);
@@ -151,7 +148,7 @@ class NaturezaContaServiceTest {
         .thenReturn(List.of(natureza));
     when(contextoRepository.findByUsuarioCriacaoAndContextoContaPadraoId(any(), any()))
         .thenReturn(Optional.of(contexto));
-    when(contextoRepository.findById(anyLong())).thenReturn(Optional.of(contexto)); // <<< ESSENCIAL
+    when(contextoRepository.findById(anyLong())).thenReturn(Optional.of(contexto));
     when(repository.save(any(NaturezaConta.class))).thenAnswer(inv -> inv.getArgument(0));
 
     service.inicializarValoresPadroes(usuario);

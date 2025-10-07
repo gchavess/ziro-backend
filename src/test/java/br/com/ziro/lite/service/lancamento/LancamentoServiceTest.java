@@ -90,7 +90,7 @@ class LancamentoServiceTest {
   void salvar_comContaExistente_deveSalvarLancamento() throws ContaNaoEncontradoException {
     Conta conta = new Conta();
     conta.setId(10L);
-    conta.setUsuarioCriacao(usuario); // ✅ evita NullPointer
+    conta.setUsuarioCriacao(usuario);
 
     LancamentoDTO dto = new LancamentoDTO();
     dto.setDescricao("Teste");
@@ -140,20 +140,17 @@ class LancamentoServiceTest {
 
   @Test
   void montarGraficoLinhaComFiltro_deveGerarGrafico() {
-    // ✅ valores correspondem ao construtor do record
     LancamentoGraficoCelulaDTO celula =
         new LancamentoGraficoCelulaDTO(
-            "Conta A", // contaDescricao
-            BigDecimal.valueOf(100), // valorBruto
-            "01/10/2025", // dataPagamento
-            null, // dataVencimento
-            "Contexto X", // contextoDescricao
-            1L, // contextoId
-            "Natureza Y", // naturezaDescricao
-            1L // naturezaId
-            );
+            "Conta A",
+            BigDecimal.valueOf(100),
+            "01/10/2025",
+            null,
+            "Contexto X",
+            1L,
+            "Natureza Y",
+            1L);
 
-    // Mock do método listarParaGrafico do próprio service
     LancamentoService spyService = spy(service);
     doReturn(List.of(celula)).when(spyService).listarParaGrafico();
 
@@ -161,7 +158,6 @@ class LancamentoServiceTest {
         spyService.montarGraficoLinhaComFiltro(
             LocalDate.of(2025, 10, 1), LocalDate.of(2025, 10, 31), null, null);
 
-    // ✅ agrupamento padrão é por contextoDescricao
     assertEquals(1, grafico.datasets().size());
     assertEquals("Contexto X", grafico.datasets().get(0).label());
     assertEquals(BigDecimal.valueOf(100), grafico.datasets().get(0).data().get(0));

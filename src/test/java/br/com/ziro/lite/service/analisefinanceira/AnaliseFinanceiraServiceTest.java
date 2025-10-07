@@ -39,7 +39,6 @@ class AnaliseFinanceiraServiceTest {
     usuario = new Usuario();
     usuario.setId(1L);
 
-    // lenient para evitar UnnecessaryStubbingException
     lenient().when(usuarioLogado.getCurrent()).thenReturn(usuario);
     lenient()
         .when(usuarioLogado.getCurrentDTO())
