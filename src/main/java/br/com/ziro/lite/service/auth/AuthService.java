@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
   private final UsuarioRepository usuarioRepository;
-  private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+  final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
   private final PasswordUtil passwordUtil;
 
   @Value("${jwt.duracaoTokenLogin}")
