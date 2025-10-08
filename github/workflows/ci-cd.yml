@@ -1,5 +1,6 @@
 name: Java CI
 
+# Dispara o workflow em push ou pull request nas branches main e sandbox
 on:
   push:
     branches: [ main, sandbox ]
@@ -11,16 +12,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      # Pega o código do repositório
+      - name: Checkout code
+        uses: actions/checkout@v3
 
+      # Configura o Java JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Build with Maven
-        run: mvn clean package
+      # Cache do Maven para acelerar builds
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
-      - name: Run tests
-        run: mvn test
+      # Build e teste
+      - name: Build and test with Maven
+        run: mvn clean verify
+
+      # (Opcional) Gerar relatório de testes em formato legível
+      - name: Show test results
+        if: always()
+        run: cat target/surefire-reports/*.txt || echo "No test reports found"
