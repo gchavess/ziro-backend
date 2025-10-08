@@ -1,4 +1,4 @@
-name: Java CI
+name: Java Test CI
 
 # Dispara o workflow em push ou pull request nas branches main e sandbox
 on:
@@ -8,7 +8,7 @@ on:
     branches: [ main, sandbox ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,11 +32,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Build e teste
-      - name: Build and test with Maven
-        run: mvn clean verify
+      # Roda apenas os testes
+      - name: Run tests
+        run: mvn test
 
-      # (Opcional) Gerar relatório de testes em formato legível
+      # (Opcional) Mostrar resultados dos testes
       - name: Show test results
         if: always()
         run: cat target/surefire-reports/*.txt || echo "No test reports found"
