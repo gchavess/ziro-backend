@@ -1,0 +1,620 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet author="GustavoChaves" id="20250910-insert-natureza-contas">
+
+        <!-- Receita de Vendas -->
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Serviços"/>
+            <column name="codigo" value="SERVICOS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='RECEITA_VENDAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Serviços Recorrentes"/>
+            <column name="codigo" value="SERVICOS_RECORRENTES"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='RECEITA_VENDAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Mercadorias"/>
+            <column name="codigo" value="MERCADORIAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='RECEITA_VENDAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Produtos"/>
+            <column name="codigo" value="PRODUTOS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='RECEITA_VENDAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Produtos Intermediários"/>
+            <column name="codigo" value="PRODUTOS_INTERMEDIARIOS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='RECEITA_VENDAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outras Receitas de Vendas"/>
+            <column name="codigo" value="OUTRAS_RECEITAS_VENDAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='RECEITA_VENDAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <!-- Custos Variáveis -->
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Royalties"/>
+            <column name="codigo" value="ROYALTIES"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='CUSTOS_VARIAVEIS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Repasses"/>
+            <column name="codigo" value="REPASSES"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='CUSTOS_VARIAVEIS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Compras de Mercadorias"/>
+            <column name="codigo" value="COMPRAS_MERCADORIAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='CUSTOS_VARIAVEIS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Compras de Produtos Intermediários"/>
+            <column name="codigo" value="COMPRAS_PRODUTOS_INTERMEDIARIOS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='CUSTOS_VARIAVEIS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Compras de Matérias-Primas"/>
+            <column name="codigo" value="COMPRAS_MATERIAS_PRIMAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='CUSTOS_VARIAVEIS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outros Custos Variáveis"/>
+            <column name="codigo" value="OUTROS_CUSTOS_VARIAVEIS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='CUSTOS_VARIAVEIS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <!-- Gastos com Pessoal -->
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Salários"/>
+            <column name="codigo" value="SALARIOS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='GASTOS_PESSOAL')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Encargos"/>
+            <column name="codigo" value="ENCARGOS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='GASTOS_PESSOAL')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Benefícios"/>
+            <column name="codigo" value="BENEFICIOS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='GASTOS_PESSOAL')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outros Gastos com Pessoal"/>
+            <column name="codigo" value="OUTROS_GASTOS_PESSOAL"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='GASTOS_PESSOAL')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <!-- Despesas -->
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Publicidade"/>
+            <column name="codigo" value="PUBLICIDADE"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id" valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DESPESAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Infraestrutura"/>
+            <column name="codigo" value="INFRAESTRUTURA"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id" valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DESPESAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Serviços de Terceiros"/>
+            <column name="codigo" value="SERVICOS_TERCEIROS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id" valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DESPESAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Licenças e Ferramentas"/>
+            <column name="codigo" value="LICENCAS_FERRAMENTAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id" valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DESPESAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Despesas Operacionais"/>
+            <column name="codigo" value="DESPESAS_OPERACIONAIS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id" valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DESPESAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Despesas Administrativas"/>
+            <column name="codigo" value="DESPESAS_ADMINISTRATIVAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id" valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DESPESAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Despesas com Ocupação"/>
+            <column name="codigo" value="DESPESAS_OCUPACAO"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id" valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DESPESAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outras Despesas"/>
+            <column name="codigo" value="OUTRAS_DESPESAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id" valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DESPESAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <!-- Deduções de Vendas -->
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Impostos sobre Faturamento"/>
+            <column name="codigo" value="IMPOSTOS_FATURAMENTO"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id" valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DED_VENDAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Devoluções"/>
+            <column name="codigo" value="DEVOLUCOES"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id" valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DED_VENDAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Meios de Pagamento"/>
+            <column name="codigo" value="MEIOS_PAGAMENTO"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id" valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DED_VENDAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outras Deduções de Vendas"/>
+            <column name="codigo" value="OUTRAS_DEDUCOES_VENDAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id" valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DED_VENDAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <!-- Depreciação -->
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Depreciação de Ativos Tangíveis"/>
+            <column name="codigo" value="DEPRECIACAO_ATIVOS_TANGIVEIS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DEPRECIACAO')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Amortização de Ativos Intangíveis"/>
+            <column name="codigo" value="AMORTIZACAO_ATIVOS_INTANGIVEIS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DEPRECIACAO')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Exaustão de Reservas Naturais"/>
+            <column name="codigo" value="EXAUSTAO_RESERVAS_NATURAIS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DEPRECIACAO')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outras Depreciações"/>
+            <column name="codigo" value="OUTRAS_DEPRECIACOES"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DEPRECIACAO')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+
+        <!-- Investimentos Operacionais -->
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Ativos Tangíveis"/>
+            <column name="codigo" value="ATIVOS_TANGIVEIS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='INVESTIMENTOS_OPERACIONAIS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Ativos Intangíveis"/>
+            <column name="codigo" value="ATIVOS_INTANGIVEIS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='INVESTIMENTOS_OPERACIONAIS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Recursos Naturais"/>
+            <column name="codigo" value="RECURSOS_NATURAIS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='INVESTIMENTOS_OPERACIONAIS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outros Investimentos Operacionais"/>
+            <column name="codigo" value="OUTROS_INVESTIMENTOS_OPERACIONAIS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='INVESTIMENTOS_OPERACIONAIS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <!-- Empréstimos e Financiamentos -->
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Capital"/>
+            <column name="codigo" value="CAPITAL"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='EMPRESTIMOS_FINANCIAMENTOS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Juros e Multas"/>
+            <column name="codigo" value="JUROS_MULTAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='EMPRESTIMOS_FINANCIAMENTOS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outras Despesas Financeiras"/>
+            <column name="codigo" value="OUTRAS_DESPESAS_FINANCEIRAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='EMPRESTIMOS_FINANCIAMENTOS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <!-- Aplicações Financeiras -->
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Capital"/>
+            <column name="codigo" value="CAPITAL"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='APLICACOES_FINANCEIRAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Rendimentos"/>
+            <column name="codigo" value="RENDIMENTOS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='APLICACOES_FINANCEIRAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outras Receitas Financeiras"/>
+            <column name="codigo" value="OUTRAS_RECEITAS_FINANCEIRAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='APLICACOES_FINANCEIRAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <!-- Tributos -->
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="IRPJ"/>
+            <column name="codigo" value="IRPJ"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id" valueComputed="(SELECT id FROM contexto_conta WHERE codigo='TRIBUTOS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="CSLL"/>
+            <column name="codigo" value="CSLL"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id" valueComputed="(SELECT id FROM contexto_conta WHERE codigo='TRIBUTOS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outros Tributos"/>
+            <column name="codigo" value="OUTROS_TRIBUTOS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id" valueComputed="(SELECT id FROM contexto_conta WHERE codigo='TRIBUTOS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <!-- Dividendos e PPR -->
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Dividendos"/>
+            <column name="codigo" value="DIVIDENDOS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DIVIDENDOS_PPR')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="PPR / PLR"/>
+            <column name="codigo" value="PPR_PLR"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DIVIDENDOS_PPR')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outras Distribuições de Lucro"/>
+            <column name="codigo" value="OUTRAS_DISTRIBUICOES_LUCRO"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='DIVIDENDOS_PPR')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <!-- Capital Social -->
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Sócios"/>
+            <column name="codigo" value="SOCIOS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='CAPITAL_SOCIAL')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Investidores"/>
+            <column name="codigo" value="INVESTIDORES"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='CAPITAL_SOCIAL')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Fundos Perdidos"/>
+            <column name="codigo" value="FUNDOS_PERDIDOS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='CAPITAL_SOCIAL')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outras Fontes de Capital"/>
+            <column name="codigo" value="OUTRAS_FONTES_CAPITAL"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='CAPITAL_SOCIAL')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <!-- Outras Entradas e Saídas -->
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Receitas Não Operacionais"/>
+            <column name="codigo" value="RECEITAS_NAO_OPERACIONAIS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='OUTRAS_ENTRADAS_SAIDAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Despesas Não Operacionais"/>
+            <column name="codigo" value="DESPESAS_NAO_OPERACIONAIS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='OUTRAS_ENTRADAS_SAIDAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outras Entradas"/>
+            <column name="codigo" value="OUTRAS_ENTRADAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='OUTRAS_ENTRADAS_SAIDAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outras Saídas"/>
+            <column name="codigo" value="OUTRAS_SAIDAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='OUTRAS_ENTRADAS_SAIDAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outras Entradas e Saídas"/>
+            <column name="codigo" value="OUTRAS_ENTRADAS_E_SAIDAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='OUTRAS_ENTRADAS_SAIDAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <!-- Transitórias -->
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Receitas Transitórias"/>
+            <column name="codigo" value="RECEITAS_TRANSITORIAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='TRANSITORIAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Despesas Transitórias"/>
+            <column name="codigo" value="DESPESAS_TRANSITORIAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='TRANSITORIAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Outras Transitórias"/>
+            <column name="codigo" value="OUTRAS_TRANSITORIAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='TRANSITORIAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <!-- Transferências entre Contas -->
+        <insert tableName="natureza_conta">
+            <column name="descricao" value="Transferências entre Contas"/>
+            <column name="codigo" value="TRANSFERENCIAS_ENTRE_CONTAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="contexto_conta_id"
+                    valueComputed="(SELECT id FROM contexto_conta WHERE codigo='TRANSFERENCIAS_CONTAS')"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet author="GustavoChaves" id="createTable_contextoConta">
+        <createTable tableName="contexto_conta">
+            <column name="id" type="bigint" autoIncrement="true" startWith="1">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="descricao" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="observacao" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="codigo" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="usuario_criacao_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_criacao" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contexto_conta_padrao_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="padrao" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="contexto_conta"
+                baseColumnNames="usuario_criacao_id"
+                constraintName="fk_contexto_conta_usuario_criacao"
+                referencedTableName="usuario"
+                referencedColumnNames="id"
+                onDelete="RESTRICT"
+                onUpdate="CASCADE"/>
+    </changeSet>
+</databaseChangeLog>

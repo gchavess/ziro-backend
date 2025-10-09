@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="0005-create-lancamento" author="gustavo-chaves">
+        <createTable tableName="lancamento">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="data_criacao" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="descricao" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="observacao" type="VARCHAR(255)"/>
+
+            <column name="usuario_criacao_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_lancamento_usuario_criacao"
+                             references="usuario(id)"/>
+            </column>
+
+            <column name="data_vencimento" type="DATE"/>
+            <column name="data_pagamento" type="DATE"/>
+
+            <column name="valor_bruto" type="NUMERIC(15,2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="conta_id" type="BIGINT">
+                <constraints nullable="true" foreignKeyName="fk_lancamento_conta"
+                             references="conta(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet author="GustavoChaves" id="20250910-insert-contexto-contas">
+
+        <insert tableName="contexto_conta">
+            <column name="descricao" value="Receita de Vendas"/>
+            <column name="codigo" value="RECEITA_VENDAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="contexto_conta">
+            <column name="descricao" value="Custos Variáveis"/>
+            <column name="codigo" value="CUSTOS_VARIAVEIS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="contexto_conta">
+            <column name="descricao" value="Gastos com Pessoal"/>
+            <column name="codigo" value="GASTOS_PESSOAL"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="contexto_conta">
+            <column name="descricao" value="Despesas"/>
+            <column name="codigo" value="DESPESAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="contexto_conta">
+            <column name="descricao" value="Deduções de Vendas"/>
+            <column name="codigo" value="DED_VENDAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="contexto_conta">
+            <column name="descricao" value="Depreciação"/>
+            <column name="codigo" value="DEPRECIACAO"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="contexto_conta">
+            <column name="descricao" value="Investimentos Operacionais"/>
+            <column name="codigo" value="INVESTIMENTOS_OPERACIONAIS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="contexto_conta">
+            <column name="descricao" value="Empréstimos e Financiamentos"/>
+            <column name="codigo" value="EMPRESTIMOS_FINANCIAMENTOS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="contexto_conta">
+            <column name="descricao" value="Aplicações Financeiras"/>
+            <column name="codigo" value="APLICACOES_FINANCEIRAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="contexto_conta">
+            <column name="descricao" value="Tributos"/>
+            <column name="codigo" value="TRIBUTOS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="contexto_conta">
+            <column name="descricao" value="Dividendos e PPR"/>
+            <column name="codigo" value="DIVIDENDOS_PPR"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="contexto_conta">
+            <column name="descricao" value="Capital Social"/>
+            <column name="codigo" value="CAPITAL_SOCIAL"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="contexto_conta">
+            <column name="descricao" value="Outras Entradas e Saídas"/>
+            <column name="codigo" value="OUTRAS_ENTRADAS_SAIDAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="contexto_conta">
+            <column name="descricao" value="Transitórias"/>
+            <column name="codigo" value="TRANSITORIAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+        <insert tableName="contexto_conta">
+            <column name="descricao" value="Transferências entre Contas"/>
+            <column name="codigo" value="TRANSFERENCIAS_CONTAS"/>
+            <column name="usuario_criacao_id" value="${idUsuarioPadrao}"/>
+            <column name="padrao" value="true"/>
+            <column name="data_criacao" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

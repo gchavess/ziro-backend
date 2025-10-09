@@ -1,0 +1,20 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <property name="idUsuarioPadrao" value="1"/>
+
+    <include file="db/changelog/0001-create-usuario.xml"/>
+    <include file="db/changelog/0002-create-contexto_conta.xml"/>
+    <include file="db/changelog/0003-create-natureza-conta.xml"/>
+    <include file="db/changelog/0004-create-conta.xml"/>
+    <include file="db/changelog/0005-create-lancamento.xml"/>
+
+    <include file="db/changelog/insert/0001-insert-usuario.xml"/>
+    <include file="db/changelog/insert/0002-insert-contexto_conta.xml"/>
+    <include file="db/changelog/insert/0003-insert-natureza_conta.xml"/>
+
+    <include file="db/changelog/0006-create-analise-financeira.xml"/>
+</databaseChangeLog>
