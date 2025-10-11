@@ -39,3 +39,4 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://ziro-postgres:5432/ziro_db
       SPRING_DATASOURCE_USERNAME: ziro_user
       SPRING_DATASOURCE_PASSWORD: ziro_pass
+      SERVER_ADDRESS: 0.0.0.0
