@@ -1,10 +1,8 @@
-version: '3.8'
-
 services:
   ziro-postgres:
     image: postgres:15
     container_name: ziro-postgres
-    restart: no
+    restart: unless-stopped
     environment:
       POSTGRES_USER: ziro_user
       POSTGRES_PASSWORD: ziro_pass
@@ -13,11 +11,15 @@ services:
       - "5432:5432"
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
   ziro-pgadmin:
     image: dpage/pgadmin4:8
     container_name: ziro-pgadmin
-    restart: no
+    restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@ziro.com
       PGADMIN_DEFAULT_PASSWORD: admin
@@ -25,11 +27,15 @@ services:
       - "5050:80"
     depends_on:
       - ziro-postgres
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   ziro-java-app:
     build: .
     container_name: ziro-java-app
-    restart: no
+    restart: unless-stopped
     ports:
       - "8080:8080"
       - "5005:5005"
@@ -40,3 +46,8 @@ services:
       SPRING_DATASOURCE_USERNAME: ziro_user
       SPRING_DATASOURCE_PASSWORD: ziro_pass
       SERVER_ADDRESS: 0.0.0.0
+      JAVA_OPTS: "-Xmx256m -Xms128m"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
