@@ -15,3 +15,6 @@ server:
 logging:
   level:
     liquibase: DEBUG
+
+frontendProducao:
+  url: https://ziro-frontend.vercel.app
