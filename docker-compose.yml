@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   ziro-postgres:
     image: postgres:15
@@ -41,6 +43,10 @@ services:
       - "5005:5005"
     depends_on:
       - ziro-postgres
+    env_file:
+      - .env
+    volumes:
+      - ./keystore:/app/keystore:ro
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://ziro-postgres:5432/ziro_db
       SPRING_DATASOURCE_USERNAME: ziro_user
