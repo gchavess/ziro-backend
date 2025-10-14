@@ -3,6 +3,7 @@ FROM openjdk:19-jdk-alpine
 WORKDIR /app
 
 COPY target/ziro-0.0.1-SNAPSHOT.jar app.jar
+COPY keystore/ziro-backend.p12 keystore/ziro-backend.p12
 
 EXPOSE 8080
 EXPOSE 5005

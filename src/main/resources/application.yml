@@ -12,6 +12,7 @@ server:
   address: 0.0.0.0
   port: 8080
   ssl:
+    enabled: false
     key-store: file:/app/keystore/ziro-backend.p12
     key-store-password: ${KEYSTORE_PASSWORD}
     key-store-type: PKCS12
