@@ -24,16 +24,24 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.csrf(csrf -> csrf.disable())
+    http
+        // Desabilita CSRF
+        .csrf(csrf -> csrf.disable())
+
+        // Configura CORS com nossa função abaixo
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+        // Configura autorização
         .authorizeHttpRequests(
             auth ->
                 auth.requestMatchers("/api/auth/**")
-                    .permitAll()
+                    .permitAll() // endpoints de login
                     .requestMatchers(HttpMethod.OPTIONS, "/**")
-                    .permitAll()
+                    .permitAll() // permite preflight
                     .anyRequest()
                     .authenticated())
+
+        // Adiciona filtro JWT antes do filtro de autenticação padrão
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
@@ -42,17 +50,20 @@ public class SecurityConfig {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(
-        List.of("http://localhost:5173", "https://ziro-frontend.vercel.app"));
+
+    // Permite local e produção
+    configuration.setAllowedOriginPatterns(
+        List.of("http://localhost:*", "https://ziro-frontend.vercel.app"));
+
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     configuration.setAllowedHeaders(
         List.of(
             "Authorization",
             "Content-Type",
-            "XXX-USUARIO-ID",
             "Accept",
             "Origin",
-            "X-Requested-With"));
+            "X-Requested-With",
+            "XXX-USUARIO-ID"));
     configuration.setExposedHeaders(List.of("Authorization", "Content-Type"));
     configuration.setAllowCredentials(true);
 
