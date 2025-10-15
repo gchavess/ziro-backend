@@ -5,7 +5,6 @@ import br.com.ziro.lite.entity.auth.LoginResponseDTO;
 import br.com.ziro.lite.entity.usuario.Usuario;
 import br.com.ziro.lite.repository.usuario.UsuarioRepository;
 import br.com.ziro.lite.util.password.PasswordUtil;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -22,6 +21,9 @@ public class AuthService {
   final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
   private final PasswordUtil passwordUtil;
 
+  @Value("${jwt.secret}")
+  private String secret;
+
   @Value("${jwt.duracaoTokenLogin}")
   private long duracaoTokenLogin;
 
@@ -32,15 +34,15 @@ public class AuthService {
 
   public String gerarToken(Usuario usuario) {
     long agora = System.currentTimeMillis();
-    long expiracao = this.duracaoTokenLogin;
+    Key key = Keys.hmacShaKeyFor(secret.getBytes());
 
     return Jwts.builder()
         .setSubject(usuario.getId().toString())
         .setIssuer("MinhaApp")
         .setIssuedAt(new Date(agora))
-        .setExpiration(new Date(agora + expiracao))
+        .setExpiration(new Date(agora + duracaoTokenLogin))
         .claim("email", usuario.getEmail())
-        .signWith(key)
+        .signWith(key, SignatureAlgorithm.HS256)
         .compact();
   }
 
@@ -65,9 +67,11 @@ public class AuthService {
 
   public boolean validarToken(String token) {
     try {
+      Key key = Keys.hmacShaKeyFor(secret.getBytes());
+
       Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
       return true;
-    } catch (JwtException e) {
+    } catch (Exception e) {
       return false;
     }
   }

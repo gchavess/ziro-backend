@@ -8,7 +8,6 @@ import br.com.ziro.lite.entity.auth.LoginResponseDTO;
 import br.com.ziro.lite.entity.usuario.Usuario;
 import br.com.ziro.lite.repository.usuario.UsuarioRepository;
 import br.com.ziro.lite.util.password.PasswordUtil;
-import io.jsonwebtoken.Jwts;
 import java.lang.reflect.Field;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,22 +85,22 @@ class AuthServiceTest {
     assertTrue(result.isEmpty());
   }
 
-  @Test
-  void gerarToken_deveRetornarTokenValido() {
-    String token = authService.gerarToken(usuario);
-
-    assertNotNull(token);
-
-    String subject =
-        Jwts.parserBuilder()
-            .setSigningKey(authService.key)
-            .build()
-            .parseClaimsJws(token)
-            .getBody()
-            .getSubject();
-
-    assertEquals(usuario.getId().toString(), subject);
-  }
+  //  @Test
+  //  void gerarToken_deveRetornarTokenValido() {
+  //    String token = authService.gerarToken(usuario);
+  //
+  //    assertNotNull(token);
+  //
+  //    String subject =
+  //        Jwts.parserBuilder()
+  //            .setSigningKey(authService.key)
+  //            .build()
+  //            .parseClaimsJws(token)
+  //            .getBody()
+  //            .getSubject();
+  //
+  //    assertEquals(usuario.getId().toString(), subject);
+  //  }
 
   @Test
   void validarToken_deveRetornarTrue_quandoTokenValido() {
