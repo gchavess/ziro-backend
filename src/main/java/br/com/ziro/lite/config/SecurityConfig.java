@@ -1,6 +1,5 @@
 package br.com.ziro.lite.config;
 
-import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -9,9 +8,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 public class SecurityConfig {
@@ -28,8 +24,10 @@ public class SecurityConfig {
         // Desabilita CSRF
         .csrf(csrf -> csrf.disable())
 
-        // Configura CORS com nossa função abaixo
-        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        // =========================================
+        // Comentando CORS no Spring: o Nginx vai controlar
+        // .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        // =========================================
 
         // Configura autorização
         .authorizeHttpRequests(
@@ -47,6 +45,9 @@ public class SecurityConfig {
     return http.build();
   }
 
+  // =========================================
+  // Comentar todo o bean de CORS, já que o Nginx está controlando
+  /*
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
@@ -71,6 +72,8 @@ public class SecurityConfig {
     source.registerCorsConfiguration("/**", configuration);
     return source;
   }
+  */
+  // =========================================
 
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig)
