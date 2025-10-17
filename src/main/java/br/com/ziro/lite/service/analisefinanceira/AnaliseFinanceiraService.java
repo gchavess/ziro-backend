@@ -1,14 +1,18 @@
 package br.com.ziro.lite.service.analisefinanceira;
 
 import br.com.ziro.lite.dto.analisefinanceira.usuario.AnaliseFinanceiraDTO;
+import br.com.ziro.lite.dto.lancamento.LancamentoGraficoDTO;
 import br.com.ziro.lite.entity.analisefinanceira.AnaliseFinanceira;
 import br.com.ziro.lite.entity.usuario.Usuario;
 import br.com.ziro.lite.exception.analisefinanceira.AnaliseFinanceiraNaoEncontradaException;
 import br.com.ziro.lite.repository.analisefinanceira.AnaliseFinanceiraRepository;
 import br.com.ziro.lite.repository.usuario.UsuarioRepository;
 import br.com.ziro.lite.security.UsuarioLogado;
+import br.com.ziro.lite.service.ia.GeminiClientService;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +23,7 @@ public class AnaliseFinanceiraService {
   private final AnaliseFinanceiraRepository repository;
   private final UsuarioRepository usuarioRepository;
   private final UsuarioLogado usuarioLogado;
+  private final GeminiClientService geminiClientService;
 
   public List<AnaliseFinanceiraDTO> listarTodos() {
     return repository
@@ -73,5 +78,23 @@ public class AnaliseFinanceiraService {
 
   public void deletar(Long id) {
     repository.deleteById(id);
+  }
+
+  public List<Map<String, Object>> gerarInsights(final LancamentoGraficoDTO dadosGrafico) {
+    List<AnaliseFinanceira> historico =
+        repository.findAllByUsuarioCriacaoOrderByDataCriacaoAsc(usuarioLogado.getCurrent());
+
+    List<String> documentos =
+        historico.stream()
+            .map(
+                h -> {
+                  String fato = h.getFato() != null ? h.getFato() : "";
+                  String causa = h.getCausa() != null ? String.join(", ", h.getCausa()) : "";
+                  String acao = h.getAcao() != null ? String.join(", ", h.getAcao()) : "";
+                  return String.format("FATO: %s | CAUSA: %s | AÇÃO: %s", fato, causa, acao);
+                })
+            .collect(Collectors.toList());
+
+    return geminiClientService.gerarInsights(dadosGrafico, documentos);
   }
 }

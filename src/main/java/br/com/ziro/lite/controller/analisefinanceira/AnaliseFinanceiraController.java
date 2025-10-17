@@ -1,11 +1,13 @@
 package br.com.ziro.lite.controller.analisefinanceira;
 
 import br.com.ziro.lite.dto.analisefinanceira.usuario.AnaliseFinanceiraDTO;
+import br.com.ziro.lite.dto.lancamento.LancamentoGraficoDTO;
 import br.com.ziro.lite.exception.analisefinanceira.AnaliseFinanceiraNaoEncontradaException;
 import br.com.ziro.lite.service.analisefinanceira.AnaliseFinanceiraService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -67,5 +69,14 @@ public class AnaliseFinanceiraController {
   public ResponseEntity<Void> deletar(@PathVariable Long id) {
     service.deletar(id);
     return ResponseEntity.noContent().build();
+  }
+
+  @Operation(
+      summary = "Gerar insights financeiros",
+      description =
+          "Gera múltiplos insights financeiros a partir de um novo dado fornecido, utilizando histórico do usuário.")
+  @PostMapping("/insights")
+  public List<Map<String, Object>> gerarInsights(@RequestBody LancamentoGraficoDTO dadosGrafico) {
+    return service.gerarInsights(dadosGrafico);
   }
 }
