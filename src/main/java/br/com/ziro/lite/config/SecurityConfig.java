@@ -1,5 +1,6 @@
 package br.com.ziro.lite.config;
 
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,6 +9,9 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 public class SecurityConfig {
@@ -24,57 +28,40 @@ public class SecurityConfig {
         // Desabilita CSRF
         .csrf(csrf -> csrf.disable())
 
-        // =========================================
-        // Comentando CORS no Spring: o Nginx vai controlar
-        // .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-        // =========================================
+        // Habilita CORS usando o bean corsConfigurationSource()
+        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
         // Configura autorização
         .authorizeHttpRequests(
             auth ->
                 auth.requestMatchers("/api/auth/**")
-                    .permitAll() // endpoints de login
+                    .permitAll() // login/cadastro
                     .requestMatchers(HttpMethod.OPTIONS, "/**")
-                    .permitAll() // permite preflight
+                    .permitAll() // preflight
                     .anyRequest()
                     .authenticated())
 
-        // Adiciona filtro JWT antes do filtro de autenticação padrão
+        // Adiciona filtro JWT antes do filtro padrão
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }
 
-  // =========================================
-  // Comentar todo o bean de CORS, já que o Nginx está controlando
-  /*
+  // Bean CORS para Spring Security
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-
-    // Permite local e produção
-    configuration.setAllowedOriginPatterns(
-        List.of("http://localhost:*", "https://ziro-frontend.vercel.app"));
-
+    configuration.setAllowedOrigins(List.of("https://ziro-frontend.vercel.app")); // frontend Vercel
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    configuration.setAllowedHeaders(
-        List.of(
-            "Authorization",
-            "Content-Type",
-            "Accept",
-            "Origin",
-            "X-Requested-With",
-            "XXX-USUARIO-ID"));
-    configuration.setExposedHeaders(List.of("Authorization", "Content-Type"));
-    configuration.setAllowCredentials(true);
+    configuration.setAllowedHeaders(List.of("*")); // Authorization, Content-Type etc.
+    configuration.setAllowCredentials(true); // permite envio de cookies ou JWT no header
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);
     return source;
   }
-  */
-  // =========================================
 
+  // Bean para AuthenticationManager
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig)
       throws Exception {
