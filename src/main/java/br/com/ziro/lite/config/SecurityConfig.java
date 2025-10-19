@@ -8,6 +8,11 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 public class SecurityConfig {
@@ -21,59 +26,40 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Desabilita CSRF
                 .csrf(csrf -> csrf.disable())
-
-                // =========================================
-                // Comentando CORS no Spring: o Nginx vai controlar
-                // .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                // =========================================
-
-                // Configura autorização
-                .authorizeHttpRequests(
-                        auth ->
-                                auth.requestMatchers("/api/auth/**")
-                                        .permitAll() // endpoints de login
-                                        .requestMatchers(HttpMethod.OPTIONS, "/**")
-                                        .permitAll() // permite preflight
-                                        .anyRequest()
-                                        .authenticated())
-
-                // Adiciona filtro JWT antes do filtro de autenticação padrão
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // ✅ Ativa o CORS aqui
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .anyRequest().authenticated()
+                )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-    // =========================================
-    // Comentar todo o bean de CORS, já que o Nginx está controlando
-  /*
-  @Bean
-  public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
+    // ✅ CORS global para todos os ambientes
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
 
-    // Permite local e produção
-    configuration.setAllowedOriginPatterns(
-        List.of("http://localhost:*", "https://ziro-frontend.vercel.app"));
+        // Domínios permitidos (local + produção)
+        configuration.setAllowedOriginPatterns(List.of(
+                "http://localhost:*",
+                "http://127.0.0.1:*",
+                "https://ziro-frontend.vercel.app",
+                "https://*.ziro.com.br"
+        ));
 
-    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    configuration.setAllowedHeaders(
-        List.of(
-            "Authorization",
-            "Content-Type",
-            "Accept",
-            "Origin",
-            "X-Requested-With",
-            "XXX-USUARIO-ID"));
-    configuration.setExposedHeaders(List.of("Authorization", "Content-Type"));
-    configuration.setAllowCredentials(true);
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setExposedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowCredentials(true);
 
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-    return source;
-  }
-  */
-    // =========================================
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig)
@@ -81,3 +67,4 @@ public class SecurityConfig {
         return authConfig.getAuthenticationManager();
     }
 }
+
