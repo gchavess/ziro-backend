@@ -75,4 +75,8 @@ public class AuthService {
       return false;
     }
   }
+
+  public Key getSecretKey() {
+    return Keys.hmacShaKeyFor(secret.getBytes());
+  }
 }
