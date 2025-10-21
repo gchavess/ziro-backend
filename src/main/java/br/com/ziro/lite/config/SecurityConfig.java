@@ -12,20 +12,39 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
+  //    @Bean
+  //    public SecurityFilterChain securityFilterChain(
+  //            HttpSecurity http, JwtAuthenticationFilter jwtFilter) throws Exception {
+  //        http.cors()
+  //                .and()
+  //                .csrf()
+  //                .disable()
+  //                .sessionManagement()
+  //                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+  //                .and()
+  //                .authorizeHttpRequests(
+  //                        auth ->
+  // auth.requestMatchers("/api/auth/**").permitAll().anyRequest().authenticated());
+  //
+  //        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+  //
+  //        return http.build();
+  //    }
+
   @Bean
   public SecurityFilterChain securityFilterChain(
       HttpSecurity http, JwtAuthenticationFilter jwtFilter) throws Exception {
-    http.cors()
-        .and()
-        .csrf()
+    http.csrf()
         .disable()
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authorizeHttpRequests(
-            auth -> auth.requestMatchers("/api/auth/**").permitAll().anyRequest().authenticated());
+            auth -> auth.requestMatchers("/api/auth/**").permitAll().anyRequest().authenticated())
+        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-    http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+    // Remover o cors() do Spring Boot
+    // http.cors();
 
     return http.build();
   }
