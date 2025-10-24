@@ -34,7 +34,9 @@ public class ContextoContaService {
 
   public List<ContextoContaDTO> listarTodos() {
 
-    return repository.findAllByUsuarioCriacao(usuarioLogado.getCurrent()).stream()
+    return repository
+        .findAllByUsuarioCriacaoOrderByDataCriacaoAsc(usuarioLogado.getCurrent())
+        .stream()
         .map(ContextoContaDTO::fromEntity)
         .toList();
   }

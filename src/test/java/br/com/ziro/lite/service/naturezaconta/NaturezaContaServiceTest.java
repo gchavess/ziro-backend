@@ -65,7 +65,8 @@ class NaturezaContaServiceTest {
 
   @Test
   void listarTodos_deveRetornarNaturezas() {
-    when(repository.findAllByUsuarioCriacao(usuario)).thenReturn(List.of(natureza));
+    when(repository.findAllByUsuarioCriacaoOrderByDataCriacaoAsc(usuario))
+        .thenReturn(List.of(natureza));
 
     List<NaturezaContaDTO> resultado = service.listarTodos();
 
@@ -131,8 +132,10 @@ class NaturezaContaServiceTest {
 
   @Test
   void listarAgrupadasPorContexto_deveRetornarDTOsAgrupados() {
-    when(contextoRepository.findAllByUsuarioCriacao(usuario)).thenReturn(List.of(contexto));
-    when(repository.findAllByUsuarioCriacao(usuario)).thenReturn(List.of(natureza));
+    when(contextoRepository.findAllByUsuarioCriacaoOrderByDataCriacaoAsc(usuario))
+        .thenReturn(List.of(contexto));
+    when(repository.findAllByUsuarioCriacaoOrderByDataCriacaoAsc(usuario))
+        .thenReturn(List.of(natureza));
 
     List<NaturezaContaAgrupadaDTO> resultado = service.listarAgrupadasPorContexto();
 
