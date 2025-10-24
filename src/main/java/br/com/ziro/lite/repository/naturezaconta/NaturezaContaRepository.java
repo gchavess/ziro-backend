@@ -17,7 +17,7 @@ public interface NaturezaContaRepository extends JpaRepository<NaturezaConta, Lo
   @Query("DELETE FROM NaturezaConta n WHERE n.contextoConta.id = :contextoId")
   void deleteByContextoId(final Long contextoId);
 
-  List<NaturezaConta> findAllByUsuarioCriacao(final Usuario usuarioCriacao);
+  List<NaturezaConta> findAllByUsuarioCriacaoOrderByDataCriacaoAsc(Usuario usuarioCriacao);
 
   List<NaturezaConta> findAllByUsuarioCriacaoAndPadrao(
       final Usuario usuarioCriacao, final Boolean padrao);

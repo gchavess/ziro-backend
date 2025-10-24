@@ -58,7 +58,8 @@ class ContextoContaServiceTest {
     c2.setDescricao("Contexto 2");
 
     when(usuarioLogado.getCurrent()).thenReturn(usuario);
-    when(repository.findAllByUsuarioCriacao(usuario)).thenReturn(Arrays.asList(c1, c2));
+    when(repository.findAllByUsuarioCriacaoOrderByDataCriacaoAsc(usuario))
+        .thenReturn(Arrays.asList(c1, c2));
 
     List<ContextoContaDTO> result = contextoContaService.listarTodos();
 

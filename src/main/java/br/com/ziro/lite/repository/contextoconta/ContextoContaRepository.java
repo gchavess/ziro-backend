@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ContextoContaRepository extends JpaRepository<ContextoConta, Long> {
-  List<ContextoConta> findAllByUsuarioCriacao(final Usuario usuarioCriacao);
+  List<ContextoConta> findAllByUsuarioCriacaoOrderByDataCriacaoAsc(Usuario usuarioCriacao);
 
   List<ContextoConta> findAllByUsuarioCriacaoAndPadrao(
       final Usuario usuarioCriacao, final Boolean padrao);
