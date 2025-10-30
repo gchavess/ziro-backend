@@ -2,7 +2,9 @@ package br.com.ziro.lite.controller.auth;
 
 import br.com.ziro.lite.entity.auth.LoginDTO;
 import br.com.ziro.lite.entity.auth.LoginResponseDTO;
+import br.com.ziro.lite.entity.usuario.Usuario;
 import br.com.ziro.lite.service.auth.AuthService;
+import br.com.ziro.lite.service.usuario.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
   private final AuthService authService;
+  private final UsuarioService usuarioService;
 
   @Operation(
       summary = "Autenticar usuário (login)",
@@ -52,5 +55,14 @@ public class AuthController {
     return authService.validarToken(token)
         ? ResponseEntity.ok().build()
         : ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+  }
+
+  @Operation(
+      summary = "Criar novo usuário",
+      description = "Cria um novo usuário no sistema com as informações fornecidas.")
+  @PostMapping("/conta")
+  public ResponseEntity<Usuario> criar(@Valid @RequestBody Usuario usuario) throws Exception {
+    Usuario criado = usuarioService.criar(usuario);
+    return ResponseEntity.status(201).body(criado);
   }
 }

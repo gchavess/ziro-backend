@@ -33,7 +33,9 @@ public class NaturezaContaService {
   private final UsuarioLogado usuarioLogado;
 
   public List<NaturezaContaDTO> listarTodos() {
-    return repository.findAllByUsuarioCriacao(usuarioLogado.getCurrent()).stream()
+    return repository
+        .findAllByUsuarioCriacaoOrderByDataCriacaoAsc(usuarioLogado.getCurrent())
+        .stream()
         .map(NaturezaContaDTO::fromEntity)
         .toList();
   }
@@ -99,9 +101,10 @@ public class NaturezaContaService {
   public List<NaturezaContaAgrupadaDTO> listarAgrupadasPorContexto() {
     // Buscar todos os contextos e naturezas
     List<ContextoConta> contextos =
-        this.contextoRepository.findAllByUsuarioCriacao(usuarioLogado.getCurrent());
+        this.contextoRepository.findAllByUsuarioCriacaoOrderByDataCriacaoAsc(
+            usuarioLogado.getCurrent());
     List<NaturezaConta> naturezas =
-        this.repository.findAllByUsuarioCriacao(usuarioLogado.getCurrent());
+        this.repository.findAllByUsuarioCriacaoOrderByDataCriacaoAsc(usuarioLogado.getCurrent());
 
     // Indexar as naturezas por contexto
     Map<Long, List<NaturezaConta>> grouped =

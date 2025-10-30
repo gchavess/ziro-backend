@@ -125,8 +125,6 @@ public class ContaService {
     if (request.getPaiId() != null) {
       entity.setPai(
           repository.findById(request.getPaiId()).orElseThrow(ContaPaiNaoEncontradoException::new));
-    } else {
-      entity.setPai(null);
     }
 
     return ContaDTO.fromEntity(repository.save(entity));

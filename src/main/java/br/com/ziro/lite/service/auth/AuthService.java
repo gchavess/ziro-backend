@@ -61,8 +61,36 @@ public class AuthService {
           response.setToken(token);
           response.setUsuarioId(usuario.getId());
           response.setEmail(usuario.getEmail());
+          response.setNome(buscarPrimeiroNome(usuario.getNome()));
+          response.setIniciaisNome(buscarIniciaisNome(usuario.getNome()));
           return response;
         });
+  }
+
+  private String buscarPrimeiroNome(String nome) {
+    if (nome == null || nome.isEmpty()) {
+      return "";
+    }
+    return nome.trim().split("\\s+")[0];
+  }
+
+  private String buscarIniciaisNome(String nome) {
+    if (nome == null || nome.isEmpty()) {
+      return "";
+    }
+
+    String[] partes = nome.trim().split("\\s+");
+    StringBuilder iniciais = new StringBuilder();
+
+    if (partes.length > 0 && !partes[0].isEmpty()) {
+      iniciais.append(partes[0].charAt(0));
+    }
+
+    if (partes.length > 1 && !partes[partes.length - 1].isEmpty()) {
+      iniciais.append(partes[partes.length - 1].charAt(0));
+    }
+
+    return iniciais.toString().toUpperCase();
   }
 
   public boolean validarToken(String token) {
