@@ -35,6 +35,7 @@ jobs:
         if: always()
         run: cat target/surefire-reports/*.txt || echo "No test reports found"
 
+      # Sonar config
       - name: SonarCloud Scan (via Maven)
         run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:5.3.0.6276:sonar \
           -Dsonar.projectKey=gchavess_ziro-backend \
