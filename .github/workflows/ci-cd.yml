@@ -11,18 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout do código
+      # 1️⃣ Checkout do código
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Configura o JDK (pode ser 17, 19, etc.)
+      # 2️⃣ Configura o JDK (pode ser 17, 19, etc.)
       - name: Set up JDK 19
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: 19
 
-      # Cache do Maven
+      # 3️⃣ Cache do Maven para builds mais rápidos
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
@@ -31,20 +31,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Compila e roda os testes com cobertura (gera target/site/jacoco)
+      # 4️⃣ Compila e roda os testes com cobertura (gera target/site/jacoco)
       - name: Build and test with JaCoCo
         run: mvn clean verify
 
-      # (Opcional) Exibir resumo dos testes no log
+      # 5️⃣ Exibir resumo dos testes no log (opcional)
       - name: Show test results
         if: always()
         run: cat target/surefire-reports/*.txt || echo "No test reports found"
 
-      # 6(Opcional) Análise no SonarCloud
+      # 6️⃣ Análise no SonarCloud com cobertura JaCoCo
       - name: SonarCloud Scan (via Maven)
-        run: mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:5.3.0.6276:sonar \
           -Dsonar.projectKey=gchavess_ziro-backend \
           -Dsonar.organization=gchavess \
-          -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
+          -Dsonar.token=${{ secrets.SONAR_TOKEN }}
