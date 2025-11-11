@@ -1,6 +1,5 @@
 name: Java Test CI
 
-# Dispara o workflow em push ou pull request nas branches main e sandbox
 on:
   push:
     branches: [ main, sandbox ]
@@ -12,18 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Pega o código do repositório
+      # 1️⃣ Checkout do código
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Configura o Java JDK 19
+      # 2️⃣ Configura o JDK (pode ser 17, 19, etc.)
       - name: Set up JDK 19
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: 19
 
-      # Cache do Maven para acelerar builds
+      # 3️⃣ Cache do Maven
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
@@ -32,11 +31,22 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Roda apenas os testes
-      - name: Run tests
-        run: mvn test
+      # 4️⃣ Compila e roda os testes com cobertura (gera target/site/jacoco)
+      - name: Build and test with JaCoCo
+        run: mvn clean verify
 
-      # (Opcional) Mostrar resultados dos testes
+      # 5️⃣ (Opcional) Exibir resumo dos testes no log
       - name: Show test results
         if: always()
         run: cat target/surefire-reports/*.txt || echo "No test reports found"
+
+      # 6️⃣ (Opcional) Análise no SonarCloud
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          args: >
+            -Dsonar.projectKey=SEU_ORG_SEU_PROJETO
+            -Dsonar.organization=SEU_ORG
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
