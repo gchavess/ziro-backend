@@ -37,8 +37,11 @@ jobs:
 
       # Sonar config
       - name: SonarCloud Scan (via Maven)
-        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:5.3.0.6276:sonar \
-          -Dsonar.projectKey=gchavess_ziro-backend \
-          -Dsonar.organization=gchavess \
-          -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
-          -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn org.sonarsource.scanner.maven:sonar-maven-plugin:5.3.0.6276:sonar \
+            -Dsonar.projectKey=gchavess_ziro-backend \
+            -Dsonar.organization=gchavess \
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
+            -Dsonar.token=$SONAR_TOKEN
