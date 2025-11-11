@@ -45,8 +45,8 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@v2
         with:
           args: >
-            -Dsonar.projectKey=SEU_ORG_SEU_PROJETO
-            -Dsonar.organization=SEU_ORG
+            -Dsonar.projectKey=gchavess_ziro-backend
+            -Dsonar.organization=gchavess
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
