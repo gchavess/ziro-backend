@@ -35,7 +35,6 @@ jobs:
         if: always()
         run: cat target/surefire-reports/*.txt || echo "No test reports found"
 
-      # Sonar config
       - name: SonarCloud Scan (via Maven)
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
